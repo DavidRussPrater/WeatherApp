@@ -1,74 +1,96 @@
 package com.example.weatherapp.data.model
 
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Forecast(
-    val city: City,
-    val cnt: Int,
-    val cod: String,
-    val list: List<Daily>,
-    val message: Int
+    val current: Current,
+    val daily: List<Daily>,
+    val hourly: List<Hourly>,
+    val lat: Double,
+    val lon: Double,
+    val timezone: String,
+    @Json(name = "timezone_offset")
+    val timezoneOffset: Int
 ) {
     @JsonClass(generateAdapter = true)
-    data class City(
-        val coord: Coordinates,
-        val country: String,
-        val id: Int,
-        val name: String,
-        val population: Int,
+    data class Current(
+        val clouds: Int,
+        @Json(name = "dew_point")
+        val dewPoint: Double,
+        val dt: Int,
+        @Json(name = "feels_like")
+        val feelsLike: Double,
+        val humidity: Int,
+        val pressure: Int,
         val sunrise: Int,
         val sunset: Int,
-        val timezone: Int
+        val temp: Double,
+        val uvi: Int,
+        val visibility: Int,
+        val weather: List<Weather>,
+        @Json(name = "wind_deg")
+        val windDeg: Int,
+        @Json(name = "wind_gust")
+        val windGust: Double?,
+        @Json(name = "wind_speed")
+        val windSpeed: Double
     ) {
         @JsonClass(generateAdapter = true)
-        data class Coordinates(
-            val lat: Double,
-            val lon: Double
+        data class Weather(
+            val description: String,
+            val icon: String,
+            val id: Int,
+            val main: String
         )
     }
 
     @JsonClass(generateAdapter = true)
-    data class Daily (
-        val clouds: Clouds,
-        val dt: Int,
-        @Json(name = "dt_txt")
-        val dtTxt: String,
-        val main: Main,
+    data class Daily(
+        val clouds: Int,
+        @Json(name = "dew_point")
+        val dewPoint: Double,
+        val dt: Long,
+        @Json(name = "feels_like")
+        val feelsLike: FeelsLike,
+        val humidity: Int,
+        @Json(name = "moon_phase")
+        val moonPhase: Double,
+        val moonrise: Int,
+        val moonset: Int,
         val pop: Double,
-        val sys: Sys,
-        val visibility: Int,
+        val pressure: Int,
+        val rain: Double?,
+        val sunrise: Int,
+        val sunset: Int,
+        val temp: Temp,
+        val uvi: Double,
         val weather: List<Weather>,
-        val wind: Wind
+        @Json(name = "wind_deg")
+        val windDeg: Int,
+        @Json(name = "wind_gust")
+        val windGust: Double?,
+        @Json(name = "wind_speed")
+        val windSpeed: Double
     ) {
         @JsonClass(generateAdapter = true)
-        data class Clouds(
-            val all: Int
+        data class FeelsLike(
+            val day: Double,
+            val eve: Double,
+            val morn: Double,
+            val night: Double
         )
 
         @JsonClass(generateAdapter = true)
-        data class Main(
-            @Json(name = "feels_like")
-            val feelsLike: Double,
-            @Json(name = "grnd_level")
-            val grndLevel: Int,
-            val humidity: Int,
-            val pressure: Int,
-            @Json(name = "sea_level")
-            val seaLevel: Int,
-            val temp: Double,
-            @Json(name = "temp_kf")
-            val tempKf: Double,
-            @Json(name = "temp_max")
-            val tempMax: Double,
-            @Json(name = "temp_min")
-            val tempMin: Double
-        )
-
-        @JsonClass(generateAdapter = true)
-        data class Sys(
-            val pod: String
+        data class Temp(
+            val day: Double,
+            val eve: Double,
+            val max: Double,
+            val min: Double,
+            val morn: Double,
+            val night: Double
         )
 
         @JsonClass(generateAdapter = true)
@@ -78,12 +100,36 @@ data class Forecast(
             val id: Int,
             val main: String
         )
+    }
 
+    @JsonClass(generateAdapter = true)
+    data class Hourly(
+        val clouds: Int,
+        @Json(name = "dew_point")
+        val dewPoint: Double,
+        val dt: Int,
+        @Json(name = "feels_like")
+        val feelsLike: Double,
+        val humidity: Int,
+        val pop: Double,
+        val pressure: Int,
+        val temp: Double,
+        val uvi: Double?,
+        val visibility: Int,
+        val weather: List<Weather>,
+        @Json(name = "wind_deg")
+        val windDeg: Int,
+        @Json(name = "wind_gust")
+        val windGust: Double?,
+        @Json(name = "wind_speed")
+        val windSpeed: Double
+    ) {
         @JsonClass(generateAdapter = true)
-        data class Wind(
-            val deg: Int,
-            val gust: Double,
-            val speed: Double
+        data class Weather(
+            val description: String,
+            val icon: String,
+            val id: Int,
+            val main: String
         )
     }
 }
