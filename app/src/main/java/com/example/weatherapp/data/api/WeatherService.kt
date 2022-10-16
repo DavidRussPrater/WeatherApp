@@ -18,7 +18,7 @@ interface WeatherService {
     @GET("geo/1.0/zip?")
     suspend fun getZipCode(
         @Query("zip") zipCode: String,
-        @Query("key") apiToken: String = "803c7f2de098a5ee7b414419d784b598"
+        @Query("appid") apiToken: String = "803c7f2de098a5ee7b414419d784b598"
     ): Location
 
 }
