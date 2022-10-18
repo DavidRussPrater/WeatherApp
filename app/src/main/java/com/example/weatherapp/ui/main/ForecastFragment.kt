@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.data.ForecastRepository
+import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.databinding.FragmentForecastBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +24,9 @@ class ForecastFragment : Fragment() {
 
     private val forecastAdapter: ForecastAdapter = ForecastAdapter()
 
-    private val viewModel = ForecastViewModel(ForecastRepository())
+    private val viewModel: ForecastViewModel by viewModels {
+        ForecastViewModelFactory((requireActivity().application as WeatherApp).repository)
+    }
     private lateinit var binding: FragmentForecastBinding
 
     override fun onCreateView(
@@ -38,7 +41,7 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDailyAdapter()
         observeForecastState()
-        showdialog()
+        showDialog()
     }
 
     private fun observeForecastState() {
@@ -53,7 +56,7 @@ class ForecastFragment : Fragment() {
                         binding.progressIndicator.hide()
                     }
                     is ForecastState.ForecastSuccess -> {
-                        forecastAdapter.submitList(forecastState.forecast.daily)
+                        forecastAdapter.submitList(forecastState.dailyList)
                         binding.progressIndicator.hide()
                     }
                     is ForecastState.LocationSuccess -> {
@@ -74,8 +77,8 @@ class ForecastFragment : Fragment() {
             .show()
     }
 
-    private fun showdialog() {
-        val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+    private fun showDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setTitle("Title")
 
         val input = EditText(requireContext())

@@ -2,6 +2,7 @@ package com.example.weatherapp.ui.main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.ForecastRepository
 import kotlinx.coroutines.Dispatchers
@@ -42,4 +43,14 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
         }
     }
 
+}
+
+class ForecastViewModelFactory(private val repository: ForecastRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ForecastViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ForecastViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

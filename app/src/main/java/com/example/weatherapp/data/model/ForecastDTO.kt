@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Forecast(
+data class ForecastDTO(
     val current: Current,
     val daily: List<Daily>,
     val hourly: List<Hourly>,
@@ -28,7 +28,7 @@ data class Forecast(
         val sunrise: Int,
         val sunset: Int,
         val temp: Double,
-        val uvi: Int,
+        val uvi: Double,
         val visibility: Int,
         val weather: List<Weather>,
         @Json(name = "wind_deg")
@@ -71,7 +71,7 @@ data class Forecast(
         @Json(name = "wind_deg")
         val windDeg: Int,
         @Json(name = "wind_gust")
-        val windGust: Double?,
+        val windGust: Double,
         @Json(name = "wind_speed")
         val windSpeed: Double
     ) {

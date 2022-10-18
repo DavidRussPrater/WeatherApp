@@ -1,25 +1,23 @@
 package com.example.weatherapp.ui.main
 
-import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.data.model.Forecast
+import com.example.weatherapp.data.model.Daily
 import com.example.weatherapp.databinding.ForecastLineItemBinding
-import java.util.Locale
 
 class ForecastAdapter :
-    ListAdapter<Forecast.Daily, ForecastAdapter.ForecastViewHolder>(ForecastItemDiffCallback()) {
+    ListAdapter<Daily, ForecastAdapter.ForecastViewHolder>(DailyItemDiffCallback()) {
 
-    val sdf = SimpleDateFormat("MMMM d, y", Locale.US)
+    var onItemClick: (daily: Daily) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ForecastLineItemBinding.inflate(layoutInflater, parent, false)
-        return ForecastViewHolder(binding)
+        return ForecastViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
@@ -27,21 +25,25 @@ class ForecastAdapter :
     }
 
     inner class ForecastViewHolder(
-        private val binding: ForecastLineItemBinding
+        private val binding: ForecastLineItemBinding,
+        private val onItemClick: (daily: Daily) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(daily: Forecast.Daily) = with(binding) {
-            date.text = sdf.format(daily.dt * 1000L)
-            temp.text = binding.root.context.getString(R.string.temp_format, daily.temp)
+        fun bind(daily: Daily) = with(binding) {
+            date.text = daily.time
+            temp.text = binding.root.context.getString(R.string.temp_format, daily.tempMin)
             wind.text = daily.windSpeed.toString()
-            description.text = daily.weather.first().description
+            description.text = daily.weather
+            root.setOnClickListener {
+                onItemClick.invoke(daily)
+            }
         }
     }
 }
 
-class ForecastItemDiffCallback : DiffUtil.ItemCallback<Forecast.Daily>() {
-    override fun areItemsTheSame(oldItem: Forecast.Daily, newItem: Forecast.Daily): Boolean =
+class DailyItemDiffCallback : DiffUtil.ItemCallback<Daily>() {
+    override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: Forecast.Daily, newItem: Forecast.Daily): Boolean =
+    override fun areContentsTheSame(oldItem: Daily, newItem: Daily): Boolean =
         oldItem == newItem
 }
