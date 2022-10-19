@@ -8,6 +8,7 @@ import com.example.weatherapp.data.ForecastRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ForecastViewModel(private val repository: ForecastRepository) : ViewModel() {
@@ -15,10 +16,8 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
     private val _forecast = MutableStateFlow<ForecastState>(ForecastState.Empty)
     val forecast: StateFlow<ForecastState> = _forecast
 
-    var latitude = ""
-    var longitude = ""
-
     fun getForecast(latitude: String, longitude: String) {
+        _forecast.value = ForecastState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getForecast(latitude, longitude)
@@ -40,6 +39,17 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
                 Log.e("Error: ", e.message!!, e)
                 _forecast.value = ForecastState.Failure(e)
             }
+        }
+    }
+
+    fun getCachedForecast() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getCachedForecast()
+                .catch { _ ->
+                    // Ignore error for now since it's loaded on start up with dialog
+                }.collect {
+                    _forecast.value = ForecastState.ForecastSuccess(it)
+                }
         }
     }
 

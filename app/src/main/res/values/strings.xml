@@ -3,4 +3,9 @@
     <string name="zip_formated">%1$s,US</string>
     <string name="temp_format">%1$d F</string>
     <string name="wind_format">%1$s mph</string>
+    <string name="dialog_title">Please enter a zip code to update the forecast.</string>
+    <string name="dialog_hint">Zip Code</string>
+    <string name="ok">OK</string>
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

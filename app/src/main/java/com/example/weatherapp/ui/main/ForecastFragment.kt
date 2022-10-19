@@ -22,12 +22,12 @@ class ForecastFragment : Fragment() {
         fun newInstance() = ForecastFragment()
     }
 
-    private val forecastAdapter: ForecastAdapter = ForecastAdapter()
-
     private val viewModel: ForecastViewModel by viewModels {
         ForecastViewModelFactory((requireActivity().application as WeatherApp).repository)
     }
+
     private lateinit var binding: FragmentForecastBinding
+    private val forecastAdapter: ForecastAdapter = ForecastAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +41,7 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDailyAdapter()
         observeForecastState()
+        viewModel.getCachedForecast()
         showDialog()
     }
 
@@ -52,7 +53,10 @@ class ForecastFragment : Fragment() {
                         binding.progressIndicator.visibility = View.VISIBLE
                     }
                     is ForecastState.Failure -> {
-                        showErrorMessage(forecastState.msg.message!!)
+                        showErrorMessage(
+                            forecastState.msg.message
+                                ?: binding.root.context.getString(R.string.unknown_error)
+                        )
                         binding.progressIndicator.hide()
                     }
                     is ForecastState.ForecastSuccess -> {
@@ -73,19 +77,19 @@ class ForecastFragment : Fragment() {
 
     private fun showErrorMessage(message: String) {
         Snackbar.make(binding.main, message, Snackbar.LENGTH_INDEFINITE)
-            .setAction("Retry") { viewModel.getForecast(viewModel.latitude, viewModel.longitude) }
+            .setAction(binding.root.context.getString(R.string.retry)) { showDialog() }
             .show()
     }
 
     private fun showDialog() {
         val builder = MaterialAlertDialogBuilder(requireContext())
-        builder.setTitle("Title")
+        builder.setTitle(binding.root.context.getString(R.string.dialog_title))
 
         val input = EditText(requireContext())
-        input.setHint("Enter Text")
-        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.hint = binding.root.context.getString(R.string.dialog_hint)
+        input.inputType = InputType.TYPE_CLASS_NUMBER
         builder.setView(input)
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton(binding.root.context.getString(R.string.ok)) { _, _ ->
             val zip = input.text.toString()
             viewModel.getLocation(requireContext().getString(R.string.zip_formated, zip))
         }

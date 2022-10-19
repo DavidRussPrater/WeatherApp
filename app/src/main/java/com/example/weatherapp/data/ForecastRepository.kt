@@ -6,6 +6,8 @@ import com.example.weatherapp.data.api.WeatherService
 import com.example.weatherapp.data.model.Daily
 import com.example.weatherapp.data.model.Location
 import com.example.weatherapp.data.persistence.WeatherDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.conflate
 
 class ForecastRepository(private val weatherDao: WeatherDao) {
 
@@ -23,11 +25,15 @@ class ForecastRepository(private val weatherDao: WeatherDao) {
         return service.getZipCode(zipCode)
     }
 
+    fun getCachedForecast(): Flow<List<Daily>> {
+        return weatherDao.getDailyList().conflate()
+    }
+
     private suspend fun insertIntoDatabase(daily: List<Daily>) {
         try {
             weatherDao.insertDaily(daily)
         } catch (e: Exception) {
-            Log.e("Error DB: ", e.message!!)
+            Log.w("Error DB: ", e.message!!)
         }
     }
 
