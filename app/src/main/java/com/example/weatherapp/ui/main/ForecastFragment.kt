@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.databinding.FragmentForecastBinding
+import com.example.weatherapp.ui.forecastdetails.ForecastDetailsFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
@@ -42,7 +43,6 @@ class ForecastFragment : Fragment() {
         setupDailyAdapter()
         observeForecastState()
         viewModel.getCachedForecast()
-        showDialog()
     }
 
     private fun observeForecastState() {
@@ -69,7 +69,9 @@ class ForecastFragment : Fragment() {
                             forecastState.location.lon.toString()
                         )
                     }
-                    is ForecastState.Empty -> {}
+                    is ForecastState.Empty -> {
+                        showDialog()
+                    }
                 }
             }
         }
@@ -102,6 +104,20 @@ class ForecastFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
+        forecastAdapter.onItemClick = { daily ->
+            openForecastDetails()
+        }
+    }
+
+    private fun openForecastDetails() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.container,
+                ForecastDetailsFragment.newInstance(),
+                "DetailsFragment"
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
 }
