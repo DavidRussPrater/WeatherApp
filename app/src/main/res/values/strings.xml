@@ -8,4 +8,21 @@
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown error</string>
+
+    <!--  Forecast Details Strings  -->
+    <string name="forecast_label">Forecast</string>
+    <string name="description_label">Description</string>
+    <string name="temp_max_label">Temperature Max</string>
+    <string name="temp_min_label">Temperature Min</string>
+    <string name="wind_speed_label">Wind Speed</string>
+    <string name="wind_gust_label">Wind Gust</string>
+    <string name="wind_direction_label">Wind Direction</string>
+
+    <string name="secondary_details_label">Secondary Details</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="dew_point_label">Dew Point</string>
+    <string name="pressure_label">Pressure</string>
+    <string name="cloud_coverage_label">Cloud Coverage</string>
+    <string name="precipitation_probability_label">Precipitation Chance</string>
+    <string name="uv_label">UV Index</string>
 </resources>
