@@ -5,14 +5,14 @@
     android:id="@+id/forecast_details_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:padding="12dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontal_middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <TextView
         android:id="@+id/forecast_date"
@@ -29,11 +29,11 @@
         style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/forecast_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forecast_date" />
 
-    <!-- Humidity label -->
     <TextView
         android:id="@+id/description_label"
         style="@style/ForecastDetailLabel"
@@ -43,7 +43,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forecast_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/description"
         style="@style/ForecastDetailText"
@@ -53,7 +52,6 @@
         app:layout_constraintTop_toBottomOf="@+id/forecast_label"
         tools:text="Partly Cloudy" />
 
-    <!-- Humidity label -->
     <TextView
         android:id="@+id/temp_max_label"
         style="@style/ForecastDetailLabel"
@@ -63,7 +61,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/temp_max"
         style="@style/ForecastDetailText"
@@ -73,7 +70,6 @@
         app:layout_constraintTop_toBottomOf="@+id/description_label"
         tools:text="100" />
 
-    <!-- Humidity label -->
     <TextView
         android:id="@+id/temp_min_label"
         style="@style/ForecastDetailLabel"
@@ -83,7 +79,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temp_max_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/temp_min"
         style="@style/ForecastDetailText"
@@ -102,7 +97,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temp_min_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/wind_speed"
         style="@style/ForecastDetailText"
@@ -121,7 +115,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wind_speed_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/wind_gust"
         style="@style/ForecastDetailText"
@@ -140,7 +133,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wind_gust_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/wind_direction"
         style="@style/ForecastDetailText"
@@ -157,11 +149,8 @@
         android:layout_height="wrap_content"
         android:text="@string/secondary_details_label"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wind_direction" />
+        app:layout_constraintTop_toBottomOf="@id/wind_direction_label" />
 
-    <!-- This guideline divides the layout into a left and right half and is used for alignment -->
-
-    <!-- Humidity label -->
     <TextView
         android:id="@+id/humidity_label"
         style="@style/ForecastDetailLabel"
@@ -171,7 +160,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/secondary_weather_details" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/humidity"
         style="@style/ForecastDetailText"
@@ -181,7 +169,6 @@
         app:layout_constraintTop_toBottomOf="@+id/secondary_weather_details"
         tools:text="38%" />
 
-    <!-- Dew label -->
     <TextView
         android:id="@+id/dew_point_label"
         style="@style/ForecastDetailLabel"
@@ -191,7 +178,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/humidity_label" />
 
-    <!-- Dew measurement -->
     <TextView
         android:id="@+id/dew_point"
         style="@style/ForecastDetailText"
@@ -201,7 +187,6 @@
         app:layout_constraintTop_toBottomOf="@id/humidity"
         tools:text="56" />
 
-    <!-- Pressure label -->
     <TextView
         android:id="@+id/pressure_label"
         style="@style/ForecastDetailLabel"
@@ -211,7 +196,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dew_point_label" />
 
-    <!-- Pressure measurement -->
     <TextView
         android:id="@+id/pressure"
         style="@style/ForecastDetailText"
@@ -221,7 +205,6 @@
         app:layout_constraintTop_toBottomOf="@id/dew_point"
         tools:text="1009" />
 
-    <!-- Cloud Coverage label -->
     <TextView
         android:id="@+id/cloud_cover_label"
         style="@style/ForecastDetailLabel"
@@ -231,7 +214,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pressure_label" />
 
-    <!-- Cloud Coverage measurement -->
     <TextView
         android:id="@+id/cloud_cover"
         style="@style/ForecastDetailText"
@@ -250,7 +232,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cloud_cover_label" />
 
-    <!-- Humidity measurement -->
     <TextView
         android:id="@+id/precipitation"
         style="@style/ForecastDetailText"
@@ -260,7 +241,6 @@
         app:layout_constraintTop_toBottomOf="@+id/cloud_cover"
         tools:text="38%" />
 
-    <!-- UV label -->
     <TextView
         android:id="@+id/uv_label"
         style="@style/ForecastDetailLabel"
@@ -270,7 +250,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/precipitation_label" />
 
-    <!-- UV measurement -->
     <TextView
         android:id="@+id/uv"
         style="@style/ForecastDetailText"

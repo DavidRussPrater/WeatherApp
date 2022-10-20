@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="zip_formated">%1$s,US</string>
-    <string name="temp_format">%1$d F</string>
-    <string name="wind_format">%1$s mph</string>
+    <string name="zip_format">%1$s,US</string>
+    <string name="temp_format">%1$d\u2109</string>
+    <string name="temp_high">Hi</string>
+    <string name="temp_low">Lo</string>
+    <string name="wind_format">%1$d mph</string>
+    <string name="wind_range_format">%1$d to %2$d mph</string>
+    <string name="percent_format">%1$d%%</string>
+    <string name="pressure_format">%1$d hPa</string>
     <string name="dialog_title">Please enter a zip code to update the forecast.</string>
     <string name="dialog_hint">Zip Code</string>
     <string name="ok">OK</string>

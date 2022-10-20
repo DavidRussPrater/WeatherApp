@@ -2,6 +2,7 @@ package com.example.weatherapp.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.weatherapp.extensions.capitalizeWords
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -45,7 +46,7 @@ data class Daily(
                 dto.temp.min.roundToInt(),
                 dto.temp.max.roundToInt(),
                 dto.uvi.roundToInt(),
-                dto.weather.first().description,
+                dto.weather.first().description.capitalizeWords(),
                 dto.windDeg,
                 dto.windGust.roundToInt(),
                 dto.windSpeed.roundToInt()

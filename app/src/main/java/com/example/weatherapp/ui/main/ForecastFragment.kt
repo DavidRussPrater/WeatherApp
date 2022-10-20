@@ -29,6 +29,7 @@ class ForecastFragment : Fragment() {
 
     private lateinit var binding: FragmentForecastBinding
     private val forecastAdapter: ForecastAdapter = ForecastAdapter()
+    private var snackbar: Snackbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,12 +51,13 @@ class ForecastFragment : Fragment() {
             viewModel.forecast.collect { forecastState ->
                 when (forecastState) {
                     is ForecastState.Loading -> {
-                        binding.progressIndicator.visibility = View.VISIBLE
+                        binding.progressIndicator.bringToFront()
+                        binding.progressIndicator.show()
                     }
                     is ForecastState.Failure -> {
                         showErrorMessage(
                             forecastState.msg.message
-                                ?: binding.root.context.getString(R.string.unknown_error)
+                                ?: getString(R.string.unknown_error)
                         )
                         binding.progressIndicator.hide()
                     }
@@ -78,22 +80,22 @@ class ForecastFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String) {
-        Snackbar.make(binding.main, message, Snackbar.LENGTH_INDEFINITE)
-            .setAction(binding.root.context.getString(R.string.retry)) { showDialog() }
-            .show()
+        snackbar = Snackbar.make(binding.main, message, Snackbar.LENGTH_INDEFINITE)
+            .setAction(getString(R.string.retry)) { showDialog() }
+        snackbar?.run { show() }
     }
 
     private fun showDialog() {
         val builder = MaterialAlertDialogBuilder(requireContext())
-        builder.setTitle(binding.root.context.getString(R.string.dialog_title))
+        builder.setTitle(getString(R.string.dialog_title))
 
         val input = EditText(requireContext())
-        input.hint = binding.root.context.getString(R.string.dialog_hint)
+        input.hint = getString(R.string.dialog_hint)
         input.inputType = InputType.TYPE_CLASS_NUMBER
         builder.setView(input)
-        builder.setPositiveButton(binding.root.context.getString(R.string.ok)) { _, _ ->
+        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
             val zip = input.text.toString()
-            viewModel.getLocation(requireContext().getString(R.string.zip_formated, zip))
+            viewModel.getLocation(getString(R.string.zip_format, zip))
         }
         builder.show()
     }
@@ -107,6 +109,11 @@ class ForecastFragment : Fragment() {
         forecastAdapter.onItemClick = { key ->
             openForecastDetails(key)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        snackbar?.dismiss()
     }
 
     private fun openForecastDetails(key: Long) {

@@ -30,8 +30,19 @@ class ForecastAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(daily: Daily) = with(binding) {
             date.text = daily.date
-            temp.text = binding.root.context.getString(R.string.temp_format, daily.tempMin)
-            wind.text = daily.windSpeed.toString()
+            tempHigh.text = binding.root.context.getString(
+                R.string.temp_format,
+                daily.tempMax
+            )
+            tempLow.text = binding.root.context.getString(
+                R.string.temp_format,
+                daily.tempMin
+            )
+            wind.text = binding.root.context.getString(
+                R.string.wind_range_format,
+                daily.windSpeed,
+                daily.windGust
+            )
             description.text = daily.weather
             root.setOnClickListener {
                 onItemClick.invoke(daily.time)

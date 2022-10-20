@@ -21,9 +21,21 @@ class ForecastDetailsViewModel(private val repository: ForecastRepository) : Vie
                 .catch { error ->
                     _forecast.value = ForecastDetailsState.Failure(error)
                 }.collect {
-                    val a = key
                     _forecast.value = ForecastDetailsState.Success(it)
                 }
+        }
+    }
+
+    fun convertWindDirection(degree: Int): String {
+        return when (degree) {
+            in 338..359, in 0..23 -> { "N" }
+            in 23..68 -> { "NE" }
+            in 68..113 -> { "E" }
+            in 113..158 -> { "SE" }
+            in 158..203 -> { "S" }
+            in 203..248 -> { "SW" }
+            in 248..293 -> { "W" }
+            else -> { "NW" }
         }
     }
 

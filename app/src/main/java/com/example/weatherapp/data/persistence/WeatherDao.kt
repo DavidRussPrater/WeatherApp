@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.OnConflictStrategy
 import com.example.weatherapp.data.model.Daily
 import kotlinx.coroutines.flow.Flow
 
@@ -16,7 +17,7 @@ interface WeatherDao {
         insertDaily(daily)
     }
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDaily(daily: List<Daily>)
 
     @Query("SELECT * FROM `daily` ORDER BY `time` ASC")

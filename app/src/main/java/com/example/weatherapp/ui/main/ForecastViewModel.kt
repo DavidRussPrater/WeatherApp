@@ -1,6 +1,5 @@
 package com.example.weatherapp.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -23,7 +22,6 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
                 val response = repository.getForecast(latitude, longitude)
                 _forecast.value = ForecastState.ForecastSuccess(response)
             } catch (e: java.lang.Exception) {
-                Log.e("Error: ", e.message!!, e)
                 _forecast.value = ForecastState.Failure(e)
             }
         }
@@ -36,7 +34,6 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
                 val response = repository.getLocation(zipCode)
                 _forecast.value = ForecastState.LocationSuccess(response)
             } catch (e: java.lang.Exception) {
-                Log.e("Error: ", e.message!!, e)
                 _forecast.value = ForecastState.Failure(e)
             }
         }

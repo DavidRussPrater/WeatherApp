@@ -65,7 +65,7 @@ class ForecastDetailsFragment : Fragment() {
     private fun renderView(daily: Daily) {
         binding.forecastDate.text = daily.date
         binding.description.text = daily.weather
-        binding.tempMax.text = getString(R.string.temp_format,  daily.tempMax)
+        binding.tempMax.text = getString(R.string.temp_format, daily.tempMax)
         binding.tempMin.text = getString(R.string.temp_format, daily.tempMin)
         binding.windSpeed.text = getString(R.string.wind_format, daily.windSpeed)
         binding.windGust.text = getString(R.string.wind_format, daily.windGust)
