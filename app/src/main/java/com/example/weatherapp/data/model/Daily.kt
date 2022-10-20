@@ -10,7 +10,8 @@ import kotlin.math.roundToInt
 @Entity(tableName = "daily")
 data class Daily(
     @PrimaryKey
-    val time: String,
+    val time: Long,
+    val date: String,
     val clouds: Int,
     val dewPoint: Int,
     val humidity: Int,
@@ -32,11 +33,12 @@ data class Daily(
 
         fun createDaily(dto: ForecastDTO.Daily): Daily {
             return Daily(
+                dto.dt,
                 sdf.format(dto.dt * 1000L),
                 dto.clouds,
                 dto.dewPoint.roundToInt(),
                 dto.humidity,
-                dto.pop.roundToInt(),
+                (dto.pop * 100).roundToInt(),
                 dto.pressure,
                 dto.sunrise,
                 dto.sunset,

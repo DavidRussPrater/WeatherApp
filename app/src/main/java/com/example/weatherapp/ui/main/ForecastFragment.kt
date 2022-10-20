@@ -42,7 +42,7 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDailyAdapter()
         observeForecastState()
-        viewModel.getCachedForecast()
+        viewModel.getCachedForecastList()
     }
 
     private fun observeForecastState() {
@@ -104,16 +104,22 @@ class ForecastFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-        forecastAdapter.onItemClick = { daily ->
-            openForecastDetails()
+        forecastAdapter.onItemClick = { key ->
+            openForecastDetails(key)
         }
     }
 
-    private fun openForecastDetails() {
+    private fun openForecastDetails(key: Long) {
+        val detailsFragment = ForecastDetailsFragment.newInstance()
+        val bundle = Bundle()
+        bundle.apply {
+            putLong("key", key)
+        }
+        detailsFragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
-                ForecastDetailsFragment.newInstance(),
+                detailsFragment,
                 "DetailsFragment"
             )
             .addToBackStack(null)

@@ -22,6 +22,9 @@ interface WeatherDao {
     @Query("SELECT * FROM `daily` ORDER BY `time` ASC")
     fun getDailyList(): Flow<List<Daily>>
 
+    @Query("SELECT * FROM `daily` WHERE time IS :key")
+    fun getDaily(key: Long): Flow<Daily>
+
     @Query("DELETE FROM `daily`")
     suspend fun deleteDaily()
 

@@ -42,9 +42,9 @@ class ForecastViewModel(private val repository: ForecastRepository) : ViewModel(
         }
     }
 
-    fun getCachedForecast() {
+    fun getCachedForecastList() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCachedForecast()
+            repository.getCachedForecastList()
                 .catch { _ ->
                     // Ignore error for now since it's loaded on start up with dialog
                 }.collect {

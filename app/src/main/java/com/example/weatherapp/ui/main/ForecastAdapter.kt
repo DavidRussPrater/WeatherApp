@@ -12,7 +12,7 @@ import com.example.weatherapp.databinding.ForecastLineItemBinding
 class ForecastAdapter :
     ListAdapter<Daily, ForecastAdapter.ForecastViewHolder>(DailyItemDiffCallback()) {
 
-    var onItemClick: (daily: Daily) -> Unit = { }
+    var onItemClick: (key: Long) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,15 +26,15 @@ class ForecastAdapter :
 
     inner class ForecastViewHolder(
         private val binding: ForecastLineItemBinding,
-        private val onItemClick: (daily: Daily) -> Unit
+        private val onItemClick: (key: Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(daily: Daily) = with(binding) {
-            date.text = daily.time
+            date.text = daily.date
             temp.text = binding.root.context.getString(R.string.temp_format, daily.tempMin)
             wind.text = daily.windSpeed.toString()
             description.text = daily.weather
             root.setOnClickListener {
-                onItemClick.invoke(daily)
+                onItemClick.invoke(daily.time)
             }
         }
     }

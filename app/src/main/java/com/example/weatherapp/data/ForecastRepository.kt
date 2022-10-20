@@ -25,8 +25,12 @@ class ForecastRepository(private val weatherDao: WeatherDao) {
         return service.getZipCode(zipCode)
     }
 
-    fun getCachedForecast(): Flow<List<Daily>> {
+    fun getCachedForecastList(): Flow<List<Daily>> {
         return weatherDao.getDailyList().conflate()
+    }
+
+    fun getCachedForecast(key: Long): Flow<Daily> {
+        return weatherDao.getDaily(key).conflate()
     }
 
     private suspend fun insertIntoDatabase(daily: List<Daily>) {
